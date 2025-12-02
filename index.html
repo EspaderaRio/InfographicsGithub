@@ -52,7 +52,7 @@
 })();
 
   </script>
-<style>
+  <style>
     body {
       box-sizing: border-box;
       margin: 0;
@@ -174,6 +174,32 @@
       text-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
     }
 
+    /* Progress Bar */
+    .progress-container {
+      margin: 24px 0;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      height: 12px;
+      overflow: hidden;
+      border: 1px solid #1a2845;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #00ff95, #00d4ff);
+      width: 0%;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 149, 0.5);
+    }
+
+    .progress-text {
+      text-align: center;
+      color: #8892b0;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
     .steps-container {
       display: flex;
       flex-direction: column;
@@ -190,6 +216,12 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
+    }
+
+    .step-card.completed {
+      border-color: #00ff95;
+      box-shadow: 0 0 20px rgba(0, 255, 149, 0.3);
     }
 
     .step-card::before {
@@ -214,11 +246,16 @@
       transform: translateY(-4px);
     }
 
+    .step-card.expanded {
+      border-color: #00d4ff;
+    }
+
     .step-header {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 16px;
+      position: relative;
     }
 
     .step-number {
@@ -248,6 +285,51 @@
       color: #00ff95;
       margin: 0 0 12px 0;
       text-shadow: 0 0 8px rgba(0, 255, 149, 0.3);
+      flex: 1;
+    }
+
+    .checkbox-container {
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #00ff95;
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .custom-checkbox:hover {
+      background: rgba(0, 255, 149, 0.1);
+      box-shadow: 0 0 10px rgba(0, 255, 149, 0.5);
+    }
+
+    .custom-checkbox.checked {
+      background: #00ff95;
+      box-shadow: 0 0 15px rgba(0, 255, 149, 0.6);
+    }
+
+    .custom-checkbox.checked::after {
+      content: '✓';
+      color: #0a0e27;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .step-content {
+      max-height: 1000px;
+      overflow: visible;
     }
 
     .step-card p {
@@ -255,6 +337,34 @@
       color: #8892b0;
       margin: 0 0 16px 0;
       line-height: 1.6;
+    }
+
+    .step-image-container {
+      margin: 16px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #1a2845;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .image-placeholder {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .image-placeholder svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .step-image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
     }
 
     .command-box {
@@ -268,12 +378,94 @@
       margin-top: 12px;
       box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.1);
       position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    .command-box::before {
+    .command-text {
+      flex: 1;
+    }
+
+    .command-text::before {
       content: '>';
       color: #00ff95;
       margin-right: 8px;
+    }
+
+    .copy-btn {
+      background: #00ff95;
+      color: #0a0e27;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .copy-btn:hover {
+      background: #00d4ff;
+      box-shadow: 0 0 10px rgba(0, 255, 149, 0.5);
+      transform: scale(1.05);
+    }
+
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, #00ff95, #00d4ff);
+      color: #0a0e27;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 15px rgba(0, 255, 149, 0.3);
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 255, 149, 0.5);
+    }
+
+    .nav-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .step-card {
+      display: none;
+    }
+
+    .step-card.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .workflow-section {
@@ -308,10 +500,11 @@
       border: 1px solid #1a2845;
       transition: all 0.3s ease;
       position: relative;
+      cursor: pointer;
     }
 
     .workflow-step::after {
-      content: '��';
+      content: '↓';
       position: absolute;
       bottom: -18px;
       left: 50%;
@@ -330,6 +523,15 @@
       transform: scale(1.02);
     }
 
+    .workflow-step.active {
+      animation: workflowPulse 1s ease-in-out;
+    }
+
+    @keyframes workflowPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 255, 149, 0.5); }
+    }
+
     .workflow-step-icon {
       font-size: 28px;
       margin-bottom: 8px;
@@ -340,6 +542,32 @@
       font-size: 14px;
       font-weight: 600;
       color: #8892b0;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #00ff95;
+      color: #0a0e27;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(0, 255, 149, 0.5);
+      z-index: 1000;
+      animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+      pointer-events: none;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(400px); opacity: 0; }
     }
 
     /* Connection dots */
@@ -472,225 +700,363 @@ Check your Browserslist config to be sure that your targets are set up correctly
     <header class="header">
      <h1 id="main-title">How to Use GitHub</h1>
      <p id="subtitle">Your Complete Guide to Version Control</p>
-    </header>
-    <div class="steps-container">
-     <div class="step-card">
+    </header><!-- Progress Tracker -->
+    <div class="progress-text" id="progress-text">
+     Step 1 of 15
+    </div><!-- Navigation Controls -->
+    <div style="display: flex; gap: 12px; margin: 24px 0; justify-content: center;"><button id="prev-btn" class="nav-btn" onclick="navigateStep(-1)" disabled> <span style="font-size: 20px;">←</span> Previous </button> <button id="next-btn" class="nav-btn" onclick="navigateStep(1)"> Next <span style="font-size: 20px;">→</span> </button>
+    </div>
+    <div class="steps-container" id="steps-container">
+     <div class="step-card" data-step="1">
       <div class="step-header">
        <div class="step-number">
         1
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="#00ff95" stroke-width="4" /> <path d="M50 30 L50 70 M30 50 L70 50" stroke="#00ff95" stroke-width="4" stroke-linecap="round" />
        </svg>
+       <h3 id="step1-title">Create an Account</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 1)"></div>
+       </div>
       </div>
-      <h3 id="step1-title">Create an Account</h3>
-      <p>Sign up for free at github.com and choose a username. This will be your developer identity! Pick a professional username as it will appear on all your projects. You'll also need to verify your email address to activate your account. GitHub offers free plans with unlimited public and private repositories.</p>
-      <div class="command-box">
-       https://github.com/signup
+      <div class="step-content">
+       <p>Sign up for free at github.com and choose a username. This will be your developer identity! Pick a professional username as it will appear on all your projects. You'll also need to verify your email address to activate your account. GitHub offers free plans with unlimited public and private repositories.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/1.jpeg" alt="GitHub account creation page" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         github.com/signup
+        </div><button class="copy-btn" onclick="copyCommand(event, 'github.com/signup')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="2">
       <div class="step-header">
        <div class="step-number">
         2
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 25 L60 35 L55 35 L55 45 L45 45 L45 35 L40 35 Z" fill="#00d4ff" /> <rect x="30" y="50" width="40" height="25" rx="3" fill="none" stroke="#00d4ff" stroke-width="3" />
        </svg>
+       <h3 id="step2-title">Install Git</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 2)"></div>
+       </div>
       </div>
-      <h3 id="step2-title">Install Git</h3>
-      <p>Before working with GitHub locally, install Git on your computer. Visit git-scm.com and download the installer for your operating system (Windows, Mac, or Linux). Follow the installation wizard with default settings. After installation, verify it worked by opening your terminal and typing "git --version". You should see the installed version number displayed.</p>
-      <div class="command-box">
-       git --version
+      <div class="step-content">
+       <p>Before working with GitHub locally, install Git on your computer. Visit git-scm.com and download the installer for your operating system (Windows, Mac, or Linux). Follow the installation wizard with default settings. After installation, verify it worked by opening your terminal and typing "git --version". You should see the installed version number displayed.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/2.jpeg" alt="Git installation page" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git --version
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git --version')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="3">
       <div class="step-header">
        <div class="step-number">
         3
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="35" fill="none" stroke="#ff00ff" stroke-width="4" /> <path d="M50 30 L50 50 L65 50" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" />
        </svg>
+       <h3 id="step3-title">Configure Git</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 3)"></div>
+       </div>
       </div>
-      <h3 id="step3-title">Configure Git</h3>
-      <p>Set up your identity in Git so your commits are properly attributed to you. Open your terminal and run the config commands with your name and the email address associated with your GitHub account. This information will be attached to every commit you make. You only need to do this once after installing Git.</p>
-      <div class="command-box">
-       git config --global user.name "Your Name"<br>
-       git config --global user.email "your@email.com"
+      <div class="step-content">
+       <p>Set up your identity in Git so your commits are properly attributed to you. Open your terminal and run the config commands with your name and the email address associated with your GitHub account. This information will be attached to every commit you make. You only need to do this once after installing Git.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/3.png" alt="Git configuration terminal" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git config --global user.name "Your Name"
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git config --global user.name &quot;Your Name&quot;')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="4">
       <div class="step-header">
        <div class="step-number">
         4
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="30" width="50" height="45" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <rect x="35" y="42" width="30" height="6" rx="2" fill="#00d4ff" /> <rect x="35" y="52" width="20" height="4" rx="2" fill="#00d4ff" /> <rect x="35" y="60" width="25" height="4" rx="2" fill="#00d4ff" />
        </svg>
+       <h3 id="step4-title">Create a Repository</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 4)"></div>
+       </div>
       </div>
-      <h3 id="step4-title">Create a Repository</h3>
-      <p>A repository (repo) is where your project lives. Click the + icon in the top right and select "New repository". Give it a meaningful name (use hyphens for spaces, like "my-project"). Add a description. Choose public (visible to everyone) or private (only you and collaborators can see it). Initialize with a README file - this markdown file is like a cover page explaining what your project does.</p>
-      <div class="command-box">
-       Initialize with a README
+      <div class="step-content">
+       <p>A repository (repo) is where your project lives. Click the + icon in the top right and select "New repository". Give it a meaningful name (use hyphens for spaces, like "my-project"). Add a description. Choose public (visible to everyone) or private (only you and collaborators can see it). Initialize with a README file - this markdown file is like a cover page explaining what your project does.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/4.jpeg" alt="Create new repository on GitHub" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         Initialize with a README
+        </div><button class="copy-btn" onclick="copyCommand(event, 'Initialize with a README')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="5">
       <div class="step-header">
        <div class="step-number">
         5
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M35 40 L35 60 L45 60 L45 50 L55 50 L55 60 L65 60 L65 40 Z" fill="none" stroke="#00ff95" stroke-width="4" stroke-linejoin="round" /> <rect x="40" y="55" width="4" height="5" fill="#00ff95" />
        </svg>
+       <h3 id="step5-title">Add a License</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 5)"></div>
+       </div>
       </div>
-      <h3 id="step5-title">Add a License</h3>
-      <p>Choose an open-source license if you want others to use your code. GitHub offers popular options like MIT (very permissive), Apache 2.0 (includes patent protection), or GPL (requires derivatives to be open source too). Click "Add file" → "Create new file", name it "LICENSE", and GitHub will offer license templates. For personal/private projects, you can skip this.</p>
-      <div class="command-box">
-       Choose MIT for permissive use
+      <div class="step-content">
+       <p>Choose an open-source license if you want others to use your code. GitHub offers popular options like MIT (very permissive), Apache 2.0 (includes patent protection), or GPL (requires derivatives to be open source too). Click "Add file" → "Create new file", name it "LICENSE", and GitHub will offer license templates. For personal/private projects, you can skip this.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/5.jpeg" alt="Add license to repository" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         Choose MIT for permissive use
+        </div><button class="copy-btn" onclick="copyCommand(event, 'Choose MIT for permissive use')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="6">
       <div class="step-header">
        <div class="step-number">
         6
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="30" width="50" height="40" rx="4" fill="none" stroke="#ff00ff" stroke-width="4" /> <path d="M35 45 L45 55 L65 40" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
        </svg>
+       <h3 id="step6-title">Clone Repository</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 6)"></div>
+       </div>
       </div>
-      <h3 id="step6-title">Clone Repository</h3>
-      <p>Download the repository to your computer to work on it locally. Click the green "Code" button on your repository page and copy the HTTPS URL. Open your terminal, navigate to where you want the project folder (use "cd" to change directories), and run the clone command. This creates a folder with your repository name containing all files and the entire Git history.</p>
-      <div class="command-box">
-       git clone [repository-url]
+      <div class="step-content">
+       <p>Download the repository to your computer to work on it locally. Click the green "Code" button on your repository page and copy the HTTPS URL. Open your terminal, navigate to where you want the project folder (use "cd" to change directories), and run the clone command. This creates a folder with your repository name containing all files and the entire Git history.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/6.png" alt="Clone repository from GitHub" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git clone [repository-url]
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git clone [repository-url]')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="7">
       <div class="step-header">
        <div class="step-number">
         7
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="35" width="40" height="30" rx="3" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M40 50 L50 50 M40 57 L55 57" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" />
        </svg>
+       <h3 id="step7-title">Create &amp; Edit Files</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 7)"></div>
+       </div>
       </div>
-      <h3 id="step7-title">Create &amp; Edit Files</h3>
-      <p>Navigate into your repository folder using your terminal ("cd repository-name"). Create new files or edit existing ones using your favorite code editor (VS Code, Sublime, Atom, etc.). Make any changes you want - add code, modify text, create new files or folders. Save your work. Git is tracking the directory and will detect all changes you make.</p>
-      <div class="command-box">
-       cd repository-name
+      <div class="step-content">
+       <p>Navigate into your repository folder using your terminal ("cd repository-name"). Create new files or edit existing ones using your favorite code editor (VS Code, Sublime, Atom, etc.). Make any changes you want - add code, modify text, create new files or folders. Save your work. Git is tracking the directory and will detect all changes you make.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/7.png" alt="Edit files in code editor" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         cd repository-name
+        </div><button class="copy-btn" onclick="copyCommand(event, 'cd repository-name')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="8">
       <div class="step-header">
        <div class="step-number">
         8
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="45" r="20" fill="none" stroke="#00ff95" stroke-width="4" /> <path d="M45 45 L50 50 L58 40" stroke="#00ff95" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" /> <path d="M35 65 L65 65" stroke="#00ff95" stroke-width="4" stroke-linecap="round" />
        </svg>
+       <h3 id="step8-title">Check Status</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 8)"></div>
+       </div>
       </div>
-      <h3 id="step8-title">Check Status</h3>
-      <p>Use "git status" to see which files have been modified, added, or deleted. This is one of the most useful commands - run it often! It shows "untracked files" (new files Git doesn't know about), "modified files" (existing files you've changed), and "staged files" (changes ready to commit). Red text means changes aren't staged yet, green means they're staged and ready to commit.</p>
-      <div class="command-box">
-       git status
+      <div class="step-content">
+       <p>Use "git status" to see which files have been modified, added, or deleted. This is one of the most useful commands - run it often! It shows "untracked files" (new files Git doesn't know about), "modified files" (existing files you've changed), and "staged files" (changes ready to commit). Red text means changes aren't staged yet, green means they're staged and ready to commit.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/8.png" alt="Git status command output" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git status
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git status')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="9">
       <div class="step-header">
        <div class="step-number">
         9
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="35" cy="50" r="10" fill="none" stroke="#00ff95" stroke-width="4" /> <circle cx="65" cy="50" r="10" fill="none" stroke="#00ff95" stroke-width="4" /> <path d="M35 50 L65 50" stroke="#00ff95" stroke-width="4" /> <circle cx="50" cy="50" r="6" fill="#00ff95" />
        </svg>
+       <h3 id="step9-title">Stage Changes</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 9)"></div>
+       </div>
       </div>
-      <h3 id="step9-title">Stage Changes</h3>
-      <p>Staging is like preparing a package before shipping. Use "git add" to stage files for commit. "git add ." stages all changes in the current directory. "git add filename" stages a specific file. You can stage multiple times before committing. Think of staging as choosing which changes to include in your next commit. Only staged changes will be committed.</p>
-      <div class="command-box">
-       git add .<br>
-       git add filename
+      <div class="step-content">
+       <p>Staging is like preparing a package before shipping. Use "git add" to stage files for commit. "git add ." stages all changes in the current directory. "git add filename" stages a specific file. You can stage multiple times before committing. Think of staging as choosing which changes to include in your next commit. Only staged changes will be committed.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/9.png" alt="Git add command staging files" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git add .
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git add .')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="10">
       <div class="step-header">
        <div class="step-number">
         10
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="35" width="40" height="30" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M45 47 L50 52 L55 45" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
        </svg>
+       <h3 id="step10-title">Commit Changes</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 10)"></div>
+       </div>
       </div>
-      <h3 id="step10-title">Commit Changes</h3>
-      <p>A commit is a snapshot of your project at a specific point in time. Use "git commit -m" followed by a message in quotes describing what you changed. Write clear, concise messages like "Add login form", "Fix navigation bug", or "Update README with installation steps". Good commit messages help you and others understand the project history. Commits are local - they don't upload to GitHub yet.</p>
-      <div class="command-box">
-       git commit -m "descriptive message"
+      <div class="step-content">
+       <p>A commit is a snapshot of your project at a specific point in time. Use "git commit -m" followed by a message in quotes describing what you changed. Write clear, concise messages like "Add login form", "Fix navigation bug", or "Update README with installation steps". Good commit messages help you and others understand the project history. Commits are local - they don't upload to GitHub yet.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/10.png" alt="Git commit command with message" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git commit -m "descriptive message"
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git commit -m &quot;descriptive message&quot;')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="11">
       <div class="step-header">
        <div class="step-number">
         11
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 50 L45 50 M45 40 L45 60 M55 40 L55 60 M55 50 L70 50" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" />
        </svg>
+       <h3 id="step11-title">Create Branches</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 11)"></div>
+       </div>
       </div>
-      <h3 id="step11-title">Create Branches</h3>
-      <p>Branches let you work on features without affecting the main code. Think of it as creating a parallel universe for your project. Use "git branch branch-name" to create a new branch, then "git checkout branch-name" to switch to it. Or use "git checkout -b branch-name" to do both at once. Make changes, commit them to your branch, and the main branch stays untouched. Perfect for experimenting!</p>
-      <div class="command-box">
-       git checkout -b feature-name
+      <div class="step-content">
+       <p>Branches let you work on features without affecting the main code. Think of it as creating a parallel universe for your project. Use "git branch branch-name" to create a new branch, then "git checkout branch-name" to switch to it. Or use "git checkout -b branch-name" to do both at once. Make changes, commit them to your branch, and the main branch stays untouched. Perfect for experimenting!</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/11.png" alt="Creating and switching Git branches" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git checkout -b feature-name
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git checkout -b feature-name')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="12">
       <div class="step-header">
        <div class="step-number">
         12
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="25" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M50 35 L50 50 L62 50" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" /> <path d="M62 42 L70 50 L62 58" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
        </svg>
+       <h3 id="step12-title">Push to GitHub</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 12)"></div>
+       </div>
       </div>
-      <h3 id="step12-title">Push to GitHub</h3>
-      <p>Upload your commits to GitHub with "git push". The first time pushing a new branch, use "git push -u origin branch-name" (the -u flag sets up tracking). After that, just "git push" works. "origin" is the default name for your remote repository on GitHub. "main" or "master" is typically the default branch name. Pushing backs up your code in the cloud and makes it visible to collaborators.</p>
-      <div class="command-box">
-       git push -u origin main
+      <div class="step-content">
+       <p>Upload your commits to GitHub with "git push". The first time pushing a new branch, use "git push -u origin branch-name" (the -u flag sets up tracking). After that, just "git push" works. "origin" is the default name for your remote repository on GitHub. "main" or "master" is typically the default branch name. Pushing backs up your code in the cloud and makes it visible to collaborators.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/12.png" alt="Git push uploading to GitHub" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git push -u origin main
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git push -u origin main')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="13">
       <div class="step-header">
        <div class="step-number">
         13
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 45 L50 45 L50 35 M50 55 L50 45 M50 45 L70 45" stroke="#00ff95" stroke-width="4" stroke-linecap="round" /> <circle cx="30" cy="45" r="5" fill="#00ff95" /> <circle cx="50" cy="35" r="5" fill="#00ff95" /> <circle cx="50" cy="55" r="5" fill="#00ff95" /> <circle cx="70" cy="45" r="5" fill="#00ff95" />
        </svg>
+       <h3 id="step13-title">Pull Changes</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 13)"></div>
+       </div>
       </div>
-      <h3 id="step13-title">Pull Changes</h3>
-      <p>If others have pushed changes to the repository, use "git pull" to download and merge them into your local copy. This fetches the latest changes from GitHub and automatically merges them with your work. Always pull before starting new work to avoid conflicts. If you and someone else edited the same lines, Git will notify you of merge conflicts that you'll need to resolve manually.</p>
-      <div class="command-box">
-       git pull origin main
+      <div class="step-content">
+       <p>If others have pushed changes to the repository, use "git pull" to download and merge them into your local copy. This fetches the latest changes from GitHub and automatically merges them with your work. Always pull before starting new work to avoid conflicts. If you and someone else edited the same lines, Git will notify you of merge conflicts that you'll need to resolve manually.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/13.png" alt="Git pull downloading changes" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         git pull origin main
+        </div><button class="copy-btn" onclick="copyCommand(event, 'git pull origin main')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="14">
       <div class="step-header">
        <div class="step-number">
         14
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="35" width="50" height="35" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M40 50 L48 58 L60 45" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
        </svg>
+       <h3 id="step14-title">Create Pull Requests</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 14)"></div>
+       </div>
       </div>
-      <h3 id="step14-title">Create Pull Requests</h3>
-      <p>A Pull Request (PR) is how you propose merging your branch into another branch (usually main). On GitHub, go to your repository, click "Pull requests" → "New pull request". Select your branch and the target branch. Add a title and description explaining your changes. Team members can review your code, leave comments, request changes, and approve it. Once approved, merge the PR to integrate your changes.</p>
-      <div class="command-box">
-       Create PR on GitHub website
+      <div class="step-content">
+       <p>A Pull Request (PR) is how you propose merging your branch into another branch (usually main). On GitHub, go to your repository, click "Pull requests" → "New pull request". Select your branch and the target branch. Add a title and description explaining your changes. Team members can review your code, leave comments, request changes, and approve it. Once approved, merge the PR to integrate your changes.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/14.jpeg" alt="Creating a pull request on GitHub" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         Create PR on GitHub website
+        </div><button class="copy-btn" onclick="copyCommand(event, 'Create PR on GitHub website')">Copy</button>
+       </div>
       </div>
      </div>
-     <div class="step-card">
+     <div class="step-card" data-step="15">
       <div class="step-header">
        <div class="step-number">
         15
        </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M35 40 L35 55 L50 65 L65 55 L65 40 L50 30 Z" fill="none" stroke="#ff00ff" stroke-width="4" stroke-linejoin="round" /> <circle cx="50" cy="50" r="8" fill="#ff00ff" />
        </svg>
+       <h3 id="step15-title">Merge &amp; Deploy</h3>
+       <div class="checkbox-container">
+        <div class="custom-checkbox" onclick="toggleCheckbox(event, 15)"></div>
+       </div>
       </div>
-      <h3 id="step15-title">Merge &amp; Deploy</h3>
-      <p>After a pull request is approved, merge it into the main branch by clicking the "Merge pull request" button on GitHub. This combines your feature branch with the main code. You can then delete the feature branch to keep things clean. If you have continuous deployment set up, merging to main can automatically deploy your changes to production. Many teams use GitHub Actions for automated testing and deployment.</p>
-      <div class="command-box">
-       Merge via GitHub interface
+      <div class="step-content">
+       <p>After a pull request is approved, merge it into the main branch by clicking the "Merge pull request" button on GitHub. This combines your feature branch with the main code. You can then delete the feature branch to keep things clean. If you have continuous deployment set up, merging to main can automatically deploy your changes to production. Many teams use GitHub Actions for automated testing and deployment.</p>
+       <div class="step-image-container"><img src="https://raw.githubusercontent.com/EspaderaRio/InfographicsGithub/main/images/15.png" alt="Merging pull request on GitHub" onerror="this.style.display='none'; this.alt='Image failed to load';">
+       </div>
+       <div class="command-box">
+        <div class="command-text">
+         Merge via GitHub interface
+        </div><button class="copy-btn" onclick="copyCommand(event, 'Merge via GitHub interface')">Copy</button>
+       </div>
       </div>
      </div>
     </div>
     <div class="workflow-section">
      <h2>Basic Git Workflow</h2>
      <div class="workflow-diagram">
-      <div class="workflow-step">
+      <div class="workflow-step" onclick="animateWorkflow(0)">
        <div class="workflow-step-icon">
         📝
        </div>
@@ -698,7 +1064,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
         Edit Files
        </div>
       </div>
-      <div class="workflow-step">
+      <div class="workflow-step" onclick="animateWorkflow(1)">
        <div class="workflow-step-icon">
         ➕
        </div>
@@ -706,7 +1072,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
         Stage Changes
        </div>
       </div>
-      <div class="workflow-step">
+      <div class="workflow-step" onclick="animateWorkflow(2)">
        <div class="workflow-step-icon">
         ✅
        </div>
@@ -714,9 +1080,9 @@ Check your Browserslist config to be sure that your targets are set up correctly
         Commit
        </div>
       </div>
-      <div class="workflow-step">
+      <div class="workflow-step" onclick="animateWorkflow(3)">
        <div class="workflow-step-icon">
-        ☁���
+        ☁️
        </div>
        <div class="workflow-step-label">
         Push to GitHub
@@ -726,7 +1092,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
     </div>
    </div>
   </div>
-  <script>
+   <script>
     const defaultConfig = {
       background_color: "#0a0e27",
       surface_color: "#0f1428",
@@ -738,11 +1104,114 @@ Check your Browserslist config to be sure that your targets are set up correctly
       main_title: "How to Use GitHub",
       subtitle: "Your Complete Guide to Version Control",
       step1_title: "Create an Account",
-      step2_title: "Create a Repository",
-      step3_title: "Clone Repository",
-      step4_title: "Make Changes & Commit",
-      step5_title: "Push to GitHub"
+      step2_title: "Install Git",
+      step3_title: "Configure Git",
+      step4_title: "Create a Repository",
+      step5_title: "Add a License"
     };
+
+    let completedSteps = new Set();
+    let currentStep = 1;
+    const totalSteps = 15;
+
+    // Initialize - show first step
+    function initSteps() {
+      showStep(currentStep);
+    }
+
+    // Show specific step
+    function showStep(stepNum) {
+      document.querySelectorAll('.step-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      const activeCard = document.querySelector(`.step-card[data-step="${stepNum}"]`);
+      if (activeCard) {
+        activeCard.classList.add('active');
+      }
+      
+      updateNavButtons();
+      updateProgressText();
+    }
+
+    // Navigate between steps
+    function navigateStep(direction) {
+      currentStep += direction;
+      if (currentStep < 1) currentStep = 1;
+      if (currentStep > totalSteps) currentStep = totalSteps;
+      
+      showStep(currentStep);
+      
+      // Scroll to top smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Update navigation buttons
+    function updateNavButtons() {
+      document.getElementById('prev-btn').disabled = currentStep === 1;
+      document.getElementById('next-btn').disabled = currentStep === totalSteps;
+    }
+
+    // Update progress text
+    function updateProgressText() {
+      document.getElementById('progress-text').textContent = `Step ${currentStep} of ${totalSteps}`;
+      const percentage = Math.round((currentStep / totalSteps) * 100);
+      document.getElementById('progress-bar').style.width = percentage + '%';
+    }
+
+    // Toggle checkbox
+    function toggleCheckbox(event, stepNum) {
+      event.stopPropagation();
+      const checkbox = event.target;
+      checkbox.classList.toggle('checked');
+      
+      const card = checkbox.closest('.step-card');
+      
+      if (checkbox.classList.contains('checked')) {
+        completedSteps.add(stepNum);
+        card.classList.add('completed');
+        showToast('Step completed! ✓');
+      } else {
+        completedSteps.delete(stepNum);
+        card.classList.remove('completed');
+      }
+    }
+
+    // Copy command to clipboard
+    function copyCommand(event, text) {
+      event.stopPropagation();
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard!');
+      });
+    }
+
+    // Show toast notification
+    function showToast(message) {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+      
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Animate workflow step
+    function animateWorkflow(index) {
+      const steps = document.querySelectorAll('.workflow-step');
+      steps[index].classList.add('active');
+      
+      setTimeout(() => {
+        steps[index].classList.remove('active');
+      }, 1000);
+    }
 
     async function onConfigChange(config) {
       const customFont = config.font_family || defaultConfig.font_family;
@@ -768,15 +1237,22 @@ Check your Browserslist config to be sure that your targets are set up correctly
       subtitle.textContent = config.subtitle || defaultConfig.subtitle;
 
       // Update step titles
-      document.getElementById('step1-title').textContent = config.step1_title || defaultConfig.step1_title;
-      document.getElementById('step2-title').textContent = config.step2_title || defaultConfig.step2_title;
-      document.getElementById('step3-title').textContent = config.step3_title || defaultConfig.step3_title;
-      document.getElementById('step4-title').textContent = config.step4_title || defaultConfig.step4_title;
-      document.getElementById('step5-title').textContent = config.step5_title || defaultConfig.step5_title;
+      const stepTitles = {
+        'step1-title': config.step1_title || defaultConfig.step1_title,
+        'step2-title': config.step2_title || defaultConfig.step2_title,
+        'step3-title': config.step3_title || defaultConfig.step3_title,
+        'step4-title': config.step4_title || defaultConfig.step4_title,
+        'step5-title': config.step5_title || defaultConfig.step5_title
+      };
+
+      Object.keys(stepTitles).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = stepTitles[id];
+      });
 
       // Apply colors to step cards
-      const stepTitles = document.querySelectorAll('.step-card h3');
-      stepTitles.forEach(title => {
+      const stepCardTitles = document.querySelectorAll('.step-card h3');
+      stepCardTitles.forEach(title => {
         title.style.color = config.primary_action_color || defaultConfig.primary_action_color;
         title.style.fontSize = `${baseSize * 1.4}px`;
       });
@@ -787,10 +1263,10 @@ Check your Browserslist config to be sure that your targets are set up correctly
         desc.style.fontSize = `${baseSize}px`;
       });
 
-      const commandBoxes = document.querySelectorAll('.command-box');
-      commandBoxes.forEach(box => {
-        box.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
-        box.style.fontSize = `${baseSize * 0.93}px`;
+      const commandTexts = document.querySelectorAll('.command-text');
+      commandTexts.forEach(cmd => {
+        cmd.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+        cmd.style.fontSize = `${baseSize * 0.93}px`;
       });
 
       // Apply colors to workflow section
@@ -816,6 +1292,10 @@ Check your Browserslist config to be sure that your targets are set up correctly
         num.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
         num.style.color = config.background_color || defaultConfig.background_color;
       });
+
+      // Apply progress bar color
+      const progressBar = document.getElementById('progress-bar');
+      progressBar.style.background = `linear-gradient(90deg, ${config.primary_action_color || defaultConfig.primary_action_color}, ${config.secondary_action_color || defaultConfig.secondary_action_color})`;
     }
 
     function mapToCapabilities(config) {
@@ -886,6 +1366,9 @@ Check your Browserslist config to be sure that your targets are set up correctly
         ["step5_title", config.step5_title || defaultConfig.step5_title]
       ]);
     }
+
+    // Initialize on page load
+    initSteps();
 
     if (window.elementSdk) {
       window.elementSdk.init({
