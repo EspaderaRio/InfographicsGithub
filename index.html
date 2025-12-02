@@ -52,7 +52,7 @@
 })();
 
   </script>
-  <style>
+<style>
     body {
       box-sizing: border-box;
       margin: 0;
@@ -311,7 +311,7 @@
     }
 
     .workflow-step::after {
-      content: '↓';
+      content: '��';
       position: absolute;
       bottom: -18px;
       left: 50%;
@@ -483,9 +483,9 @@ Check your Browserslist config to be sure that your targets are set up correctly
        </svg>
       </div>
       <h3 id="step1-title">Create an Account</h3>
-      <p>Sign up for free at github.com and choose a username. This will be your developer identity!</p>
+      <p>Sign up for free at github.com and choose a username. This will be your developer identity! Pick a professional username as it will appear on all your projects. You'll also need to verify your email address to activate your account. GitHub offers free plans with unlimited public and private repositories.</p>
       <div class="command-box">
-       github.com/signup
+       https://github.com/signup
       </div>
      </div>
      <div class="step-card">
@@ -493,13 +493,13 @@ Check your Browserslist config to be sure that your targets are set up correctly
        <div class="step-number">
         2
        </div>
-       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="30" width="50" height="45" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <rect x="35" y="42" width="30" height="6" rx="2" fill="#00d4ff" /> <rect x="35" y="52" width="20" height="4" rx="2" fill="#00d4ff" /> <rect x="35" y="60" width="25" height="4" rx="2" fill="#00d4ff" />
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 25 L60 35 L55 35 L55 45 L45 45 L45 35 L40 35 Z" fill="#00d4ff" /> <rect x="30" y="50" width="40" height="25" rx="3" fill="none" stroke="#00d4ff" stroke-width="3" />
        </svg>
       </div>
-      <h3 id="step2-title">Create a Repository</h3>
-      <p>A repository (repo) is where your project lives. Click the + icon and select "New repository".</p>
+      <h3 id="step2-title">Install Git</h3>
+      <p>Before working with GitHub locally, install Git on your computer. Visit git-scm.com and download the installer for your operating system (Windows, Mac, or Linux). Follow the installation wizard with default settings. After installation, verify it worked by opening your terminal and typing "git --version". You should see the installed version number displayed.</p>
       <div class="command-box">
-       Initialize with a README
+       git --version
       </div>
      </div>
      <div class="step-card">
@@ -507,13 +507,14 @@ Check your Browserslist config to be sure that your targets are set up correctly
        <div class="step-number">
         3
        </div>
-       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="30" width="50" height="40" rx="4" fill="none" stroke="#ff00ff" stroke-width="4" /> <path d="M35 45 L45 55 L65 40" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="35" fill="none" stroke="#ff00ff" stroke-width="4" /> <path d="M50 30 L50 50 L65 50" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" />
        </svg>
       </div>
-      <h3 id="step3-title">Clone Repository</h3>
-      <p>Download the repository to your computer to work on it locally using Git.</p>
+      <h3 id="step3-title">Configure Git</h3>
+      <p>Set up your identity in Git so your commits are properly attributed to you. Open your terminal and run the config commands with your name and the email address associated with your GitHub account. This information will be attached to every commit you make. You only need to do this once after installing Git.</p>
       <div class="command-box">
-       git clone [repository-url]
+       git config --global user.name "Your Name"<br>
+       git config --global user.email "your@email.com"
       </div>
      </div>
      <div class="step-card">
@@ -521,14 +522,13 @@ Check your Browserslist config to be sure that your targets are set up correctly
        <div class="step-number">
         4
        </div>
-       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="35" cy="50" r="10" fill="none" stroke="#00ff95" stroke-width="4" /> <circle cx="65" cy="50" r="10" fill="none" stroke="#00ff95" stroke-width="4" /> <path d="M35 50 L65 50" stroke="#00ff95" stroke-width="4" /> <circle cx="50" cy="50" r="6" fill="#00ff95" />
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="30" width="50" height="45" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <rect x="35" y="42" width="30" height="6" rx="2" fill="#00d4ff" /> <rect x="35" y="52" width="20" height="4" rx="2" fill="#00d4ff" /> <rect x="35" y="60" width="25" height="4" rx="2" fill="#00d4ff" />
        </svg>
       </div>
-      <h3 id="step4-title">Make Changes &amp; Commit</h3>
-      <p>Edit files, stage your changes, and commit them with a descriptive message.</p>
+      <h3 id="step4-title">Create a Repository</h3>
+      <p>A repository (repo) is where your project lives. Click the + icon in the top right and select "New repository". Give it a meaningful name (use hyphens for spaces, like "my-project"). Add a description. Choose public (visible to everyone) or private (only you and collaborators can see it). Initialize with a README file - this markdown file is like a cover page explaining what your project does.</p>
       <div class="command-box">
-       git add .<br>
-       git commit -m "message"
+       Initialize with a README
       </div>
      </div>
      <div class="step-card">
@@ -536,13 +536,154 @@ Check your Browserslist config to be sure that your targets are set up correctly
        <div class="step-number">
         5
        </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M35 40 L35 60 L45 60 L45 50 L55 50 L55 60 L65 60 L65 40 Z" fill="none" stroke="#00ff95" stroke-width="4" stroke-linejoin="round" /> <rect x="40" y="55" width="4" height="5" fill="#00ff95" />
+       </svg>
+      </div>
+      <h3 id="step5-title">Add a License</h3>
+      <p>Choose an open-source license if you want others to use your code. GitHub offers popular options like MIT (very permissive), Apache 2.0 (includes patent protection), or GPL (requires derivatives to be open source too). Click "Add file" → "Create new file", name it "LICENSE", and GitHub will offer license templates. For personal/private projects, you can skip this.</p>
+      <div class="command-box">
+       Choose MIT for permissive use
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        6
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="30" width="50" height="40" rx="4" fill="none" stroke="#ff00ff" stroke-width="4" /> <path d="M35 45 L45 55 L65 40" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+       </svg>
+      </div>
+      <h3 id="step6-title">Clone Repository</h3>
+      <p>Download the repository to your computer to work on it locally. Click the green "Code" button on your repository page and copy the HTTPS URL. Open your terminal, navigate to where you want the project folder (use "cd" to change directories), and run the clone command. This creates a folder with your repository name containing all files and the entire Git history.</p>
+      <div class="command-box">
+       git clone [repository-url]
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        7
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="35" width="40" height="30" rx="3" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M40 50 L50 50 M40 57 L55 57" stroke="#00d4ff" stroke-width="3" stroke-linecap="round" />
+       </svg>
+      </div>
+      <h3 id="step7-title">Create &amp; Edit Files</h3>
+      <p>Navigate into your repository folder using your terminal ("cd repository-name"). Create new files or edit existing ones using your favorite code editor (VS Code, Sublime, Atom, etc.). Make any changes you want - add code, modify text, create new files or folders. Save your work. Git is tracking the directory and will detect all changes you make.</p>
+      <div class="command-box">
+       cd repository-name
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        8
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="45" r="20" fill="none" stroke="#00ff95" stroke-width="4" /> <path d="M45 45 L50 50 L58 40" stroke="#00ff95" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" /> <path d="M35 65 L65 65" stroke="#00ff95" stroke-width="4" stroke-linecap="round" />
+       </svg>
+      </div>
+      <h3 id="step8-title">Check Status</h3>
+      <p>Use "git status" to see which files have been modified, added, or deleted. This is one of the most useful commands - run it often! It shows "untracked files" (new files Git doesn't know about), "modified files" (existing files you've changed), and "staged files" (changes ready to commit). Red text means changes aren't staged yet, green means they're staged and ready to commit.</p>
+      <div class="command-box">
+       git status
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        9
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="35" cy="50" r="10" fill="none" stroke="#00ff95" stroke-width="4" /> <circle cx="65" cy="50" r="10" fill="none" stroke="#00ff95" stroke-width="4" /> <path d="M35 50 L65 50" stroke="#00ff95" stroke-width="4" /> <circle cx="50" cy="50" r="6" fill="#00ff95" />
+       </svg>
+      </div>
+      <h3 id="step9-title">Stage Changes</h3>
+      <p>Staging is like preparing a package before shipping. Use "git add" to stage files for commit. "git add ." stages all changes in the current directory. "git add filename" stages a specific file. You can stage multiple times before committing. Think of staging as choosing which changes to include in your next commit. Only staged changes will be committed.</p>
+      <div class="command-box">
+       git add .<br>
+       git add filename
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        10
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="35" width="40" height="30" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M45 47 L50 52 L55 45" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+       </svg>
+      </div>
+      <h3 id="step10-title">Commit Changes</h3>
+      <p>A commit is a snapshot of your project at a specific point in time. Use "git commit -m" followed by a message in quotes describing what you changed. Write clear, concise messages like "Add login form", "Fix navigation bug", or "Update README with installation steps". Good commit messages help you and others understand the project history. Commits are local - they don't upload to GitHub yet.</p>
+      <div class="command-box">
+       git commit -m "descriptive message"
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        11
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 50 L45 50 M45 40 L45 60 M55 40 L55 60 M55 50 L70 50" stroke="#ff00ff" stroke-width="4" stroke-linecap="round" />
+       </svg>
+      </div>
+      <h3 id="step11-title">Create Branches</h3>
+      <p>Branches let you work on features without affecting the main code. Think of it as creating a parallel universe for your project. Use "git branch branch-name" to create a new branch, then "git checkout branch-name" to switch to it. Or use "git checkout -b branch-name" to do both at once. Make changes, commit them to your branch, and the main branch stays untouched. Perfect for experimenting!</p>
+      <div class="command-box">
+       git checkout -b feature-name
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        12
+       </div>
        <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="25" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M50 35 L50 50 L62 50" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" /> <path d="M62 42 L70 50 L62 58" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
        </svg>
       </div>
-      <h3 id="step5-title">Push to GitHub</h3>
-      <p>Upload your commits to GitHub so others can see your work and collaborate.</p>
+      <h3 id="step12-title">Push to GitHub</h3>
+      <p>Upload your commits to GitHub with "git push". The first time pushing a new branch, use "git push -u origin branch-name" (the -u flag sets up tracking). After that, just "git push" works. "origin" is the default name for your remote repository on GitHub. "main" or "master" is typically the default branch name. Pushing backs up your code in the cloud and makes it visible to collaborators.</p>
       <div class="command-box">
-       git push origin main
+       git push -u origin main
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        13
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 45 L50 45 L50 35 M50 55 L50 45 M50 45 L70 45" stroke="#00ff95" stroke-width="4" stroke-linecap="round" /> <circle cx="30" cy="45" r="5" fill="#00ff95" /> <circle cx="50" cy="35" r="5" fill="#00ff95" /> <circle cx="50" cy="55" r="5" fill="#00ff95" /> <circle cx="70" cy="45" r="5" fill="#00ff95" />
+       </svg>
+      </div>
+      <h3 id="step13-title">Pull Changes</h3>
+      <p>If others have pushed changes to the repository, use "git pull" to download and merge them into your local copy. This fetches the latest changes from GitHub and automatically merges them with your work. Always pull before starting new work to avoid conflicts. If you and someone else edited the same lines, Git will notify you of merge conflicts that you'll need to resolve manually.</p>
+      <div class="command-box">
+       git pull origin main
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        14
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="35" width="50" height="35" rx="4" fill="none" stroke="#00d4ff" stroke-width="4" /> <path d="M40 50 L48 58 L60 45" stroke="#00d4ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+       </svg>
+      </div>
+      <h3 id="step14-title">Create Pull Requests</h3>
+      <p>A Pull Request (PR) is how you propose merging your branch into another branch (usually main). On GitHub, go to your repository, click "Pull requests" → "New pull request". Select your branch and the target branch. Add a title and description explaining your changes. Team members can review your code, leave comments, request changes, and approve it. Once approved, merge the PR to integrate your changes.</p>
+      <div class="command-box">
+       Create PR on GitHub website
+      </div>
+     </div>
+     <div class="step-card">
+      <div class="step-header">
+       <div class="step-number">
+        15
+       </div>
+       <svg class="step-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M35 40 L35 55 L50 65 L65 55 L65 40 L50 30 Z" fill="none" stroke="#ff00ff" stroke-width="4" stroke-linejoin="round" /> <circle cx="50" cy="50" r="8" fill="#ff00ff" />
+       </svg>
+      </div>
+      <h3 id="step15-title">Merge &amp; Deploy</h3>
+      <p>After a pull request is approved, merge it into the main branch by clicking the "Merge pull request" button on GitHub. This combines your feature branch with the main code. You can then delete the feature branch to keep things clean. If you have continuous deployment set up, merging to main can automatically deploy your changes to production. Many teams use GitHub Actions for automated testing and deployment.</p>
+      <div class="command-box">
+       Merge via GitHub interface
       </div>
      </div>
     </div>
@@ -575,7 +716,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
       </div>
       <div class="workflow-step">
        <div class="workflow-step-icon">
-        ☁️
+        ☁���
        </div>
        <div class="workflow-step-label">
         Push to GitHub
